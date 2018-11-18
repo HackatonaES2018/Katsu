@@ -1,0 +1,266 @@
+{
+	"info": {
+		"_postman_id": "a4c57212-c07d-48fb-b9d5-a9d88ee5b292",
+		"name": "Hermes Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sign in",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6b0bbcf5-aa66-40fd-92b4-a614ea249824",
+						"type": "text/javascript",
+						"exec": [
+							"var a = JSON.parse(responseBody);",
+							"var Result = a.jwt;",
+							"console.log(Result);",
+							"pm.environment.set(\"hermesToken\", Result);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\r\n\"username\": \"hackathon\",\r\n\"password\": \"1234\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "https://api.h3rmes.com/api/v1/users/sign_in",
+					"protocol": "https",
+					"host": [
+						"api",
+						"h3rmes",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"sign_in"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Messages",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{hermesToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"message\": {\n\"media_id\": \"abd91f6e-6799-46e1-92d0-5014e6077245\", \n\"text\": \"``` FALA MEU PARÇA ```\", \n\"to\": \"+5551984469967\", \n\"type\": \"text\"\n\t}}"
+				},
+				"url": {
+					"raw": "https://api.h3rmes.com/api/v1/messages",
+					"protocol": "https",
+					"host": [
+						"api",
+						"h3rmes",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check contact",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"message\": {\n\"media_id\": \"35df1900-aa01-4e25-b83c-a26a9afe023f\", \n\"text\": \"oi\", \n\"to\": \"+5511994879275\", \n\"type\": \"check_contact\"\n\t}}"
+				},
+				"url": {
+					"raw": "https://api.h3rmes.com/api/v1/messages",
+					"protocol": "https",
+					"host": [
+						"api",
+						"h3rmes",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send Image",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": false
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"message\": {\r\n\t\t\"to\": \"+5551984469967\",\r\n\t\t\"type\": \"image\",\r\n\t\t\"content_type\": \"image/jpg\",\r\n\t\t\"recipient_type\": \"individual\",\r\n\t\t\"url\": \"https://pictr.com/images/2018/09/04/0Etb1r.jpg\",\r\n\t\t\"media_id\": \"abd91f6e-6799-46e1-92d0-5014e6077245\",\r\n\t\t\"caption\": \"Test\"\r\n\t}\r\n}"
+				},
+				"url": {
+					"raw": "https://api.h3rmes.com/api/v1/messages",
+					"protocol": "https",
+					"host": [
+						"api",
+						"h3rmes",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"messages"
+					]
+				},
+				"description": "Recient Type Individual | group\r\n\r\nContent Type image/jpg | image/jpeg | image/png\r\n\r\nurl Url da imagem\r\n\r\ncaption texto embaixo"
+			},
+			"response": []
+		},
+		{
+			"name": "Send Document",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"message\": {\r\n\t\t\"to\": \"+5511994879275\",\r\n\t\t\"type\": \"document\",\r\n\t\t\"content_type\": \"document/pdf\",\r\n\t\t\"recipient_type\": \"individual\",\r\n\t\t\"url\": \"https://s21.q4cdn.com/374334112/files/doc_downloads/test.pdf\",\r\n\t\t\"media_id\": \"35df1900-aa01-4e25-b83c-a26a9afe023f\",\r\n\t\t\"caption\": \"Test\"\r\n\t}\r\n}"
+				},
+				"url": {
+					"raw": "https://api.h3rmes.com/api/v1/messages",
+					"protocol": "https",
+					"host": [
+						"api",
+						"h3rmes",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"messages"
+					]
+				},
+				"description": "Recient Type Individual | group\n\nContent Type  document/pdf | document/doc(x) | document/ppt(x) | document/ppt(x)\n\nurl Url do arquivo\n\ncaption texto embaixo"
+			},
+			"response": []
+		},
+		{
+			"name": "Send Audio",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"message\": {\r\n\t\t\"to\": \"+5511994879275\",\r\n\t\t\"type\": \"audio\",\r\n\t\t\"content_type\": \"audio/mp3\",\r\n\t\t\"recipient_type\": \"individual\",\r\n\t\t\"url\": \"http://interaxaamericas.callbox.com.br/inc/popgravador.php?arquivo=monitor%2F2018%2F09%2F03%2F14-32-33-205-022221146-1535995952_12295-00002fb6.mp3\",\r\n\t\t\"media_id\": \"35df1900-aa01-4e25-b83c-a26a9afe023f\"\r\n\t}\r\n}"
+				},
+				"url": {
+					"raw": "https://api.h3rmes.com/api/v1/messages",
+					"protocol": "https",
+					"host": [
+						"api",
+						"h3rmes",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"messages"
+					]
+				},
+				"description": "Recient Type Individual | group\n\nContent Type  audio/AAC | audio/M4A | audio/AMR | audio/MP3 | audio/OGG | audio/OPUS\n\nurl Url do arquivo\n\ncaption texto embaixo"
+			},
+			"response": []
+		}
+	]
+}
